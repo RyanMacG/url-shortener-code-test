@@ -31,6 +31,7 @@ group :development, :test do
   # autofailing rspec in a nice format
   gem 'fuubar'
   gem 'rspec-rails'
+  gem 'rspec_junit_formatter'
 end
 
 group :development do
