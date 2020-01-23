@@ -13,10 +13,10 @@ class UrlShortenerService
 
   def validate_url(url)
     uri = URI.parse(url)
-      if uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
-        url
-      else
-        'http://' + url
-      end
+    if uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
+      url
+    else
+      'http://' + url
+    end
   end
 end
