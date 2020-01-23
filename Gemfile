@@ -25,6 +25,10 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+# Writing your own regex randomiser is a bit overblown
+# so using this
+gem 'regexp-examples'
+
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
