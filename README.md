@@ -1,5 +1,63 @@
 # Url Shortener Code Test
 
+## Usage instructions
+
+Adding new entries can be done using the below interface;
+``` sh
+➜ curl localhost:3000 -H "Accept: application/json" -H "Content-type: application/json" -XPOST -d '{ "url": "http://www.farmdrop.com" }'
+{"short_url":"toj893","url":"http://www.farmdrop.com"}%
+
+➜ curl localhost:3000 -H "Accept: application/json" -H "Content-type: application/json" -XPOST -d '{ "url": "http://www.google.com" }'
+{"short_url":"qgc327","url":"http://www.google.com"}%
+```
+
+And curling the short url provided will return the redirect
+``` sh
+➜ curl -v localhost:3000/toj893
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 3000 (#0)
+> GET /toj893 HTTP/1.1
+> Host: localhost:3000
+> User-Agent: curl/7.64.1
+> Accept: */*
+>
+< HTTP/1.1 302 Found
+< X-Frame-Options: SAMEORIGIN
+< X-XSS-Protection: 1; mode=block
+< X-Content-Type-Options: nosniff
+< X-Download-Options: noopen
+< X-Permitted-Cross-Domain-Policies: none
+< Referrer-Policy: strict-origin-when-cross-origin
+< Location: http://www.farmdrop.com
+< Content-Type: text/html; charset=utf-8
+< Cache-Control: no-cache
+< X-Request-Id: f8d9be52-6883-42d8-9d17-9b2caec0a207
+< X-Runtime: 0.001942
+< Transfer-Encoding: chunked
+<
+* Connection #0 to host localhost left intact
+<html><body>You are being <a href="http://www.farmdrop.com">redirected</a>.</body></html>* Closing connection 0
+```
+
+You can also list all the short codes by calling a get on the root url
+``` sh
+➜ curl localhost:3000 -H "Accept: application/json" -H "Content-type: application/json"
+[{"short_url":"toj893","url":"http://www.farmdrop.com"},{"short_url":"qgc327","url":"http://www.google.com"}]%
+```
+
+### Datastore
+
+I considered doing this via Redis rather than just an Array assigned to a constant but figured that might hit up against being technically a database and therefore be breaking the rules. It's certainly more than is needed here but it would certainly be a nicer method.
+
+### Docker
+
+I'd steer clear of this, I had it working initially but there seems to be problems with how yarn works and docker. I've tried updating this a few different ways and it seems to work on a clean build and not after. On reflection given I decided to focus on the API rather than the frontend I'd probably spin this up as a Rails API project in future instead and avoid the headache of fighting with yarn. Otherwise I'd need to do a deeper dive on this as I've never run into this problem before with rails and docker.
+
+## Original content below
+
+---
+
 Without using an external database, we'd like you to create a URL shortening
 service. The URLs do not need to persist between restarts, but should be
 shareable between different clients while the server is running.
