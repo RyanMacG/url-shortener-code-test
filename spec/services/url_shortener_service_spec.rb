@@ -14,7 +14,7 @@ describe UrlShortenerService do
           end
 
           it 'stores the shortened url and code' do
-            expect(URL_STORE.find { |u| u[:code] == subject }[:url]).to eq(url)
+            expect(UrlShortenerService::URL_STORE.find { |u| u[:short_url] == subject }[:url]).to eq(url)
           end
         end
 
@@ -26,7 +26,7 @@ describe UrlShortenerService do
           end
 
           it 'stores the shortened url and code' do
-            expect(URL_STORE.find { |u| u[:code] == subject }[:url]).to eq('http://' + url)
+            expect(UrlShortenerService::URL_STORE.find { |u| u[:short_url] == subject }[:url]).to eq('http://' + url)
           end
         end
       end
@@ -40,7 +40,7 @@ describe UrlShortenerService do
         end
 
         it 'stores the shortened url and code' do
-          expect(URL_STORE.find { |u| u[:code] == subject }[:url]).to eq(url)
+          expect(UrlShortenerService::URL_STORE.find { |u| u[:short_url] == subject }[:url]).to eq(url)
         end
 
         context 'with multiple attempts to shorten the same url' do
@@ -54,7 +54,7 @@ describe UrlShortenerService do
           end
 
           it 'only stores the url once' do
-            urls = URL_STORE.map(&:values).flatten
+            urls = UrlShortenerService::URL_STORE.map(&:values).flatten
             expect(urls).to include(url)
             expect(urls.select { |u| u == url }.count).to eq(1)
           end

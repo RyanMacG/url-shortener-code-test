@@ -1,15 +1,15 @@
-URL_STORE = []
-
 class UrlShortenerService
+  URL_STORE = []
+
   def shorten(url:)
     valid_url = validate_url(url)
     stored_url = URL_STORE.find { |u| u[:url] == valid_url }
 
     if stored_url.present?
-      code = stored_url[:code]
+      code = stored_url[:short_url]
     else
       code = generate_short_code
-      URL_STORE << { code: code, url: valid_url }
+      URL_STORE << { short_url: code, url: valid_url }
     end
 
     code
